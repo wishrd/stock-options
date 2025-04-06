@@ -1,38 +1,27 @@
-# sv
+# Stock Options
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is an Progressive Web Application for managing stock options and create predictions based on selling prices.
 
-## Creating a project
+For building the UI it uses SvelteKit and DaisyUI allowing fast development. It is mobile first but can be used in desktop.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Main page
 
-```bash
-# create a new project in the current directory
-npx sv create
+In the main view, each stock options package is presented in a row and has the following properties:
+- Package ID (visible in the row)
+- Amount (visible in the row)
+- Price (visible in the row)
+- Vesting date (visible in the row)
+- Vesting strategy:
+    - 1/4 vested after one year, then 1/48 every month
+    - 100% vested after six months
+    - 100% vested after twelve months
 
-# create a new project in my-app
-npx sv create my-app
-```
+It should have additionally a calculated property with the currently vested amount of stocks based on the current month, which is also visible in the row.
 
-## Developing
+Each item of the list navigates to a detail view in which each property but the Package ID can be edited.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Prediction page
 
-```bash
-npm run dev
+In the prediction view, the user can add several prices to sell the stock options and each one will display the gross revenue using that price, for the total of the stock options and for the current vested stock options.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Clicking on each price row, the detail view can be opened to see the gross revenue per package. 
