@@ -1,54 +1,33 @@
 <script lang="ts">
-  import type { PageData } from './$types';
   import { predictionsService } from '$lib/services/predictions';
-  import { RevenueCalculator } from '$lib/services/RevenueCalculator';
+  import PredictionCard from '$lib/components/PredictionCard.svelte';
+  import type { PageProps } from './$types';
 
-  export let data: PageData;
-  let { predictions, packages } = data;
+  let { data }: PageProps = $props();
+  let predictions = data.predictions;
+  let packages = data.packages;
 
-  const revenueCalculator = new RevenueCalculator();
-
-  async function deletePrediction(id: string) {
-    await predictionsService.deletePrediction(id);
-    predictions = predictions.filter(p => p.id !== id);
-  }
-
-  function getTotalRevenue(prediction: typeof predictions[0]) {
-    return revenueCalculator.calculateTotalRevenue(prediction, packages);
-  }
-
-  function getVestedRevenue(prediction: typeof predictions[0]) {
-    return revenueCalculator.calculateVestedRevenue(prediction, packages);
+  async function deletePrediction(id: string): Promise<void> {
+    if (confirm('Are you sure you want to delete this prediction?')) {
+      await predictionsService.deletePrediction(id);
+      predictions = predictions.filter(p => p.id !== id);
+    }
   }
 </script>
 
 <div class="space-y-6">
   <div class="flex justify-between items-center">
     <h1 class="text-2xl font-bold">Predictions</h1>
-    <a href="/predictions/new" class="btn btn-primary">New Prediction</a>
+    <a href="/predictions/new" class="btn btn-primary">New</a>
   </div>
 
-  <div class="space-y-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {#each predictions as prediction (prediction.id)}
-      <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <div class="flex justify-between items-start">
-            <div>
-              <h2 class="card-title">Price: ${prediction.price.toFixed(2)}</h2>
-              <div class="mt-2 space-y-1">
-                <p>Total Revenue: ${getTotalRevenue(prediction).toFixed(2)}</p>
-                <p>Vested Revenue: ${getVestedRevenue(prediction).toFixed(2)}</p>
-              </div>
-            </div>
-            <button
-              class="btn btn-ghost btn-sm"
-              on:click={() => deletePrediction(prediction.id)}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
+      <PredictionCard 
+        {prediction} 
+        {packages}
+        onDelete={deletePrediction}
+      />
     {/each}
   </div>
 </div> 

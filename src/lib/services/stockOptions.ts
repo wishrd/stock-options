@@ -11,11 +11,7 @@ export class StockOptionsService {
     return packagesStorage.getPackage(id);
   }
 
-  async createPackage(pkg: Omit<StockOptionPackage, 'id'>): Promise<StockOptionPackage> {
-    const newPackage: StockOptionPackage = {
-      ...pkg,
-      id: crypto.randomUUID()
-    };
+  async createPackage(newPackage: StockOptionPackage): Promise<StockOptionPackage> {
     await packagesStorage.savePackage(newPackage);
     return newPackage;
   }

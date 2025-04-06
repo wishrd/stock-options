@@ -20,6 +20,10 @@ export class PredictionsService {
     return predictionsStorage.getPrediction(id);
   }
 
+  async updatePrediction(prediction: Prediction): Promise<void> {
+    await predictionsStorage.savePrediction(prediction);
+  }
+
   async deletePrediction(id: string): Promise<void> {
     await predictionsStorage.deletePrediction(id);
   }
