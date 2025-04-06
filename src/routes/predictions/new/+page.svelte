@@ -6,7 +6,7 @@
 
   async function handleSubmit(prediction: Omit<Prediction, 'id'>) {
     await predictionsService.createPrediction(prediction);
-    goto('/predictions');
+    goto('#/predictions');
   }
 </script>
 

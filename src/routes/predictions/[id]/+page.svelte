@@ -14,7 +14,7 @@
       ...predictionData,
       id: prediction.id
     });
-    goto('/predictions');
+    goto('#/predictions');
   }
 </script>
 

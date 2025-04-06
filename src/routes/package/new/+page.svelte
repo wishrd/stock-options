@@ -6,7 +6,7 @@
 
   async function handleSubmit(stockPackage: StockOptionPackage) {
     await stockOptionsService.createPackage(stockPackage);
-    goto('/');
+    goto('#/');
   }
 </script>
 

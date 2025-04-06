@@ -111,7 +111,7 @@
   </div>
 
   <div class="flex justify-end gap-2">
-    <a href="/" class="btn btn-ghost" role="button">Cancel</a>
+    <a href="#" class="btn btn-ghost" role="button">Cancel</a>
     <button 
       type="submit" 
       class="btn btn-primary" 

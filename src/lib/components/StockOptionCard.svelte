@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="card-actions justify-end mt-4">
-      <a href="/package/{stockPackage.id}" class="btn btn-primary btn-sm">Edit</a>
+      <a href="#/package/{stockPackage.id}" class="btn btn-primary btn-sm">Edit</a>
       <button class="btn btn-error btn-sm" on:click={deletePackage}>Delete</button>
     </div>
   </div>

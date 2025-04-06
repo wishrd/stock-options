@@ -57,7 +57,7 @@
       <div class="flex gap-2">
         <button 
           class="btn btn-ghost btn-sm" 
-          on:click={() => goto(`/predictions/${prediction.id}`)}
+          on:click={() => goto(`#/predictions/${prediction.id}`)}
           aria-label="Edit prediction"
         >
           Edit

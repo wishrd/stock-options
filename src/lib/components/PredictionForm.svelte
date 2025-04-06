@@ -33,7 +33,7 @@
   </div>
 
   <div class="flex justify-end gap-2">
-    <a href="/predictions" class="btn btn-ghost" role="button">Cancel</a>
+    <a href="#/predictions" class="btn btn-ghost" role="button">Cancel</a>
     <button 
       type="submit" 
       class="btn btn-primary" 
