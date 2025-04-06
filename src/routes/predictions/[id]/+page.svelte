@@ -1,24 +1,25 @@
 <script lang="ts">
-  import type { Prediction, StockOptionPackage } from '$lib/types';
-  import { formatCurrency, calculateVestedAmount } from '$lib/utils';
+  import type { Prediction, StockOptionPackage } from '$lib/models';
+  import { formatCurrency } from '$lib/utils';
   import { predictionsService } from '$lib/services/predictions';
+  import { RevenueCalculator } from '$lib/services/RevenueCalculator';
   import { goto } from '$app/navigation';
   import type { PageProps } from './$types';
 
+  const revenueCalculator = new RevenueCalculator();
   let { data }: PageProps = $props();
   let packages: StockOptionPackage[] = data.packages;
   let prediction: Prediction | null = data.prediction;
 
   function getPackageRevenue(pkg: StockOptionPackage): string {
     if (!prediction) return formatCurrency(0);
-    const totalRevenue = pkg.amount * (prediction.price - pkg.price);
+    const totalRevenue = revenueCalculator.calculatePackageRevenue(pkg, prediction.price);
     return formatCurrency(totalRevenue);
   }
 
   function getPackageVestedRevenue(pkg: StockOptionPackage): string {
     if (!prediction) return formatCurrency(0);
-    const vestedAmount = calculateVestedAmount(pkg);
-    const vestedRevenue = vestedAmount * (prediction.price - pkg.price);
+    const vestedRevenue = revenueCalculator.calculatePackageVestedRevenue(pkg, prediction.price);
     return formatCurrency(vestedRevenue);
   }
 
@@ -49,11 +50,11 @@
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-sm text-gray-500">Total Revenue</p>
-            <p class="font-semibold">{formatCurrency(predictionsService.calculateTotalRevenue(prediction, packages))}</p>
+            <p class="font-semibold">{formatCurrency(revenueCalculator.calculateTotalRevenue(prediction, packages))}</p>
           </div>
           <div>
             <p class="text-sm text-gray-500">Vested Revenue</p>
-            <p class="font-semibold">{formatCurrency(predictionsService.calculateVestedRevenue(prediction, packages))}</p>
+            <p class="font-semibold">{formatCurrency(revenueCalculator.calculateVestedRevenue(prediction, packages))}</p>
           </div>
         </div>
       </div>

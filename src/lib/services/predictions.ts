@@ -1,54 +1,27 @@
-import type { Prediction, StockOptionPackage } from '$lib/types';
-import { getStorageService } from './storage';
-import { calculateVestedAmount } from '$lib/utils';
+import type { Prediction } from '$lib/models';
+import { predictionsStorage } from './storage/PredictionsStorage';
 
 export class PredictionsService {
-  private storage = getStorageService();
-
   async getPredictions(): Promise<Prediction[]> {
-    return this.storage.getPredictions();
+    return predictionsStorage.getPredictions();
   }
 
-  async createPrediction(price: number): Promise<Prediction> {
-    const prediction: Prediction = {
+  async createPrediction(prediction: Omit<Prediction, 'id'>): Promise<Prediction> {
+    const newPrediction: Prediction = {
       id: crypto.randomUUID(),
-      price
+      ...prediction
     };
 
-    await this.storage.savePrediction(prediction);
-    return prediction;
+    await predictionsStorage.savePrediction(newPrediction);
+    return newPrediction;
   }
 
   async getPrediction(id: string): Promise<Prediction | null> {
-    const predictions = await this.storage.getPredictions();
-    return predictions.find(p => p.id === id) || null;
+    return predictionsStorage.getPrediction(id);
   }
 
   async deletePrediction(id: string): Promise<void> {
-    await this.storage.deletePrediction(id);
-  }
-
-  calculateVestedRevenue(prediction: Prediction, packages: StockOptionPackage[]): number {
-    let vestedRevenue = 0;
-
-    for (const pkg of packages) {
-      const vestedAmount = calculateVestedAmount(pkg);
-      const vestedRevenueForPackage = vestedAmount * (prediction.price - pkg.price);
-      vestedRevenue += vestedRevenueForPackage;
-    }
-
-    return vestedRevenue;
-  }
-
-  calculateTotalRevenue(prediction: Prediction, packages: StockOptionPackage[]): number {
-    let totalRevenue = 0;
-
-    for (const pkg of packages) {
-      const totalRevenueForPackage = pkg.amount * (prediction.price - pkg.price);
-      totalRevenue += totalRevenueForPackage;
-    }
-
-    return totalRevenue;
+    await predictionsStorage.deletePrediction(id);
   }
 }
 

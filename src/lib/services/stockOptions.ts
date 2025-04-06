@@ -1,16 +1,14 @@
-import type { StockOptionPackage } from '$lib/types';
-import { getStorageService } from './storage';
+import type { StockOptionPackage } from '$lib/models';
+import { packagesStorage } from './storage/PackagesStorage';
 import { calculateVestedAmount } from '$lib/utils';
 
 export class StockOptionsService {
-  private storage = getStorageService();
-
   async getPackages(): Promise<StockOptionPackage[]> {
-    return this.storage.getPackages();
+    return packagesStorage.getPackages();
   }
 
   async getPackage(id: string): Promise<StockOptionPackage | null> {
-    return this.storage.getPackage(id);
+    return packagesStorage.getPackage(id);
   }
 
   async createPackage(pkg: Omit<StockOptionPackage, 'id'>): Promise<StockOptionPackage> {
@@ -18,20 +16,25 @@ export class StockOptionsService {
       ...pkg,
       id: crypto.randomUUID()
     };
-    await this.storage.savePackage(newPackage);
+    await packagesStorage.savePackage(newPackage);
     return newPackage;
   }
 
   async updatePackage(pkg: StockOptionPackage): Promise<void> {
-    await this.storage.savePackage(pkg);
+    await packagesStorage.savePackage(pkg);
   }
 
   async deletePackage(id: string): Promise<void> {
-    await this.storage.deletePackage(id);
+    await packagesStorage.deletePackage(id);
   }
 
   async getVestedAmount(pkg: StockOptionPackage): Promise<number> {
     return calculateVestedAmount(pkg);
+  }
+
+  async getCurrentPrice(): Promise<number> {
+    // TODO: Implement actual price fetching from an API
+    return 0;
   }
 }
 
