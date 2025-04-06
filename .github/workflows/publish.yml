@@ -14,6 +14,8 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: pnpm/action-setup@v4
+      - name: Install dependencies
+        run: pnpm install
       - name: Build
         run: pnpm build
       - name: Upload artifact
