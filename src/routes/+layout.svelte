@@ -1,7 +1,15 @@
 <script lang="ts">
+	import { pwaInfo } from 'virtual:pwa-info'; 
+
 	import { page } from '$app/stores';
 	import '../app.css';
+
+	const webManifest = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : '')
 </script>
+
+<svelte:head> 
+ 	{@html webManifest} 
+</svelte:head>
 
 <div class="min-h-screen bg-base-200">
 	<div class="navbar bg-base-100 shadow-lg">
