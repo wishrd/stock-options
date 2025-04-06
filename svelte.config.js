@@ -5,11 +5,12 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter({
-			fallback: '404.html',
-		}),
+		adapter: adapter(),
 		paths: {
 			base: '/stock-options'
+		},
+		router: {
+			type: 'hash',
 		}
 	}
 };
