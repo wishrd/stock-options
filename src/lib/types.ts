@@ -16,10 +16,4 @@ export interface VestedAmount {
 export interface Prediction {
   id: string;
   price: number;
-  totalRevenue: number;
-  vestedRevenue: number;
-  perPackage: Record<string, {
-    totalRevenue: number;
-    vestedRevenue: number;
-  }>;
 } 

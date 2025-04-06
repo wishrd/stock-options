@@ -1,6 +1,5 @@
-import type { Prediction } from '$lib/types';
+import type { Prediction, StockOptionPackage } from '$lib/types';
 import { getStorageService } from './storage';
-import { stockOptionsService } from './stockOptions';
 import { calculateVestedAmount } from '$lib/utils';
 
 export class PredictionsService {
@@ -11,27 +10,10 @@ export class PredictionsService {
   }
 
   async createPrediction(price: number): Promise<Prediction> {
-    const packages = await stockOptionsService.getPackages();
     const prediction: Prediction = {
       id: crypto.randomUUID(),
-      price,
-      totalRevenue: 0,
-      vestedRevenue: 0,
-      perPackage: {}
+      price
     };
-
-    for (const pkg of packages) {
-      const vestedAmount = calculateVestedAmount(pkg);
-      const totalRevenue = pkg.amount * (price - pkg.price);
-      const vestedRevenue = vestedAmount * (price - pkg.price);
-
-      prediction.totalRevenue += totalRevenue;
-      prediction.vestedRevenue += vestedRevenue;
-      prediction.perPackage[pkg.id] = {
-        totalRevenue,
-        vestedRevenue
-      };
-    }
 
     await this.storage.savePrediction(prediction);
     return prediction;
@@ -44,6 +26,29 @@ export class PredictionsService {
 
   async deletePrediction(id: string): Promise<void> {
     await this.storage.deletePrediction(id);
+  }
+
+  calculateVestedRevenue(prediction: Prediction, packages: StockOptionPackage[]): number {
+    let vestedRevenue = 0;
+
+    for (const pkg of packages) {
+      const vestedAmount = calculateVestedAmount(pkg);
+      const vestedRevenueForPackage = vestedAmount * (prediction.price - pkg.price);
+      vestedRevenue += vestedRevenueForPackage;
+    }
+
+    return vestedRevenue;
+  }
+
+  calculateTotalRevenue(prediction: Prediction, packages: StockOptionPackage[]): number {
+    let totalRevenue = 0;
+
+    for (const pkg of packages) {
+      const totalRevenueForPackage = pkg.amount * (prediction.price - pkg.price);
+      totalRevenue += totalRevenueForPackage;
+    }
+
+    return totalRevenue;
   }
 }
 

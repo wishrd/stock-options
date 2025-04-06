@@ -21,6 +21,23 @@
     predictions = [...predictions, prediction];
     newPrice = 0;
   }
+
+  async function deletePrediction(prediction: Prediction) {
+    if (confirm('Are you sure you want to delete this prediction?')) {
+      await predictionsService.deletePrediction(prediction.id);
+      predictions = predictions.filter(p => p.id !== prediction.id);
+    }
+  }
+
+  function getTotalRevenue(prediction: Prediction): string {
+    const totalRevenue = predictionsService.calculateTotalRevenue(prediction, packages);
+    return formatCurrency(totalRevenue);
+  }
+
+  function getVestedRevenue(prediction: Prediction): string {
+    const vestedRevenue = predictionsService.calculateVestedRevenue(prediction, packages);
+    return formatCurrency(vestedRevenue);
+  }
 </script>
 
 <div class="space-y-4">
@@ -47,15 +64,16 @@
           <div class="grid grid-cols-2 gap-4">
             <div>
               <p class="text-sm text-gray-500">Total Revenue</p>
-              <p class="font-semibold">{formatCurrency(prediction.totalRevenue)}</p>
+              <p class="font-semibold">{getTotalRevenue(prediction)}</p>
             </div>
             <div>
               <p class="text-sm text-gray-500">Vested Revenue</p>
-              <p class="font-semibold">{formatCurrency(prediction.vestedRevenue)}</p>
+              <p class="font-semibold">{getVestedRevenue(prediction)}</p>
             </div>
           </div>
           <div class="card-actions justify-end mt-4">
             <a href="/predictions/{prediction.id}" class="btn btn-primary btn-sm">Details</a>
+            <button class="btn btn-error btn-sm" on:click={() => deletePrediction(prediction)}>Delete</button>
           </div>
         </div>
       </div>
