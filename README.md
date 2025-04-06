@@ -4,9 +4,9 @@ This is an Progressive Web Application for managing stock options and create pre
 
 For building the UI it uses SvelteKit and DaisyUI allowing fast development. It is mobile first but can be used in desktop.
 
-## Authentication
+## Database
 
-For the authentication, we want the user to log in with Google to use Google Drive as storage.
+For the database, it is using IndexedDB, so all data will be stored locally in the browser.
 
 ## Main page
 
