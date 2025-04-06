@@ -20,6 +20,7 @@
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
+		"@vite-pwa/sveltekit": "^1.0.0",
 		"daisyui": "^5.0.12",
 		"dexie": "^4.0.11",
 		"eslint": "^9.18.0",
@@ -41,5 +42,9 @@
 			"esbuild"
 		]
 	},
-	"packageManager": "pnpm@10.5.2"
+	"packageManager": "pnpm@10.5.2",
+	"dependencies": {
+		"canvas": "^3.1.0",
+		"sharp": "^0.34.0"
+	}
 }
