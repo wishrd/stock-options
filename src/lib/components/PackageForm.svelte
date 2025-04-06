@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { StockOptionPackage, VestingStrategy } from '$lib/models';
 
+  export let id: string;
   export let stockPackage: StockOptionPackage = {
     id: '',
     amount: 0,
@@ -23,7 +24,7 @@
   }
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="space-y-6">
+<form id={id} on:submit|preventDefault={handleSubmit} class="space-y-6">
   <div class="space-y-2">
     <label for="id" class="block text-sm font-medium">
       Package ID
@@ -108,16 +109,5 @@
       {/each}
     </select>
     <p id="vesting-strategy-description" class="text-sm text-gray-500 mt-1">How the stock options will vest over time</p>
-  </div>
-
-  <div class="flex justify-end gap-2">
-    <a href="#" class="btn btn-ghost" role="button">Cancel</a>
-    <button 
-      type="submit" 
-      class="btn btn-primary" 
-      disabled={!stockPackage.id || stockPackage.amount <= 0 || stockPackage.price <= 0 || !stockPackage.vestingDate}
-    >
-      {isEditing ? 'Save' : 'Create'}
-    </button>
   </div>
 </form> 

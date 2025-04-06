@@ -6,7 +6,6 @@
 
   export let prediction: Prediction;
   export let packages: StockOptionPackage[];
-  export let onDelete: (id: string) => Promise<void>;
 
   const revenueCalculator = new RevenueCalculator();
   let isExpanded = false;
@@ -31,6 +30,10 @@
       toggleExpand(event);
     }
   }
+
+  function handleEdit() {
+    goto(`#/predictions/${prediction.id}`);
+  }
 </script>
 
 <div 
@@ -39,46 +42,31 @@
   tabindex="0"
   aria-expanded={isExpanded}
   aria-label="Prediction details for price {formatCurrency(prediction.price)}"
-  on:click={toggleExpand}
-  on:keydown={handleKeydown}
+  onclick={toggleExpand}
+  onkeydown={handleKeydown}
 >
   <div class="card-body">
-    <div class="flex justify-between items-start">
-      <div class="flex items-center gap-2">
-        <h2 class="card-title">Price: {formatCurrency(prediction.price)}</h2>
-        <span 
-          class="text-gray-500 transition-transform duration-200 group-hover:text-gray-700"
-          class:rotate-180={isExpanded}
-          aria-hidden="true"
-        >
-          ▼
-        </span>
-      </div>
-      <div class="flex gap-2">
-        <button 
-          class="btn btn-ghost btn-sm" 
-          on:click={() => goto(`#/predictions/${prediction.id}`)}
-          aria-label="Edit prediction"
-        >
-          Edit
-        </button>
-        <button 
-          class="btn btn-error btn-sm" 
-          on:click={() => onDelete(prediction.id)}
-          aria-label="Delete prediction"
-        >
-          Delete
-        </button>
-      </div>
+    <div class="flex justify-between items-center">
+      <h2 class="card-title">{formatCurrency(prediction.price)}</h2>
+      <button 
+        class="btn btn-ghost btn-circle text-primary hover:bg-primary hover:text-primary-content" 
+        onclick={handleEdit}
+        aria-label="Edit prediction"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </button>
     </div>
-    <div class="grid grid-cols-1 gap-2 mt-4">
-      <div class="flex justify-between items-center">
-        <span class="text-sm font-medium">Total Revenue</span>
-        <span class="text-lg font-semibold">{formatCurrency(totalRevenue)}</span>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+      <div>
+        <p class="text-sm text-gray-500">Total Revenue</p>
+        <p class="font-semibold">{formatCurrency(totalRevenue)}</p>
       </div>
-      <div class="flex justify-between items-center">
-        <span class="text-sm font-medium">Vested Revenue</span>
-        <span class="text-lg font-semibold">{formatCurrency(vestedRevenue)}</span>
+      <div>
+        <p class="text-sm text-gray-500">Vested Revenue</p>
+        <p class="font-semibold">{formatCurrency(vestedRevenue)}</p>
       </div>
     </div>
 

@@ -1,18 +1,10 @@
 <script lang="ts">
-  import { predictionsService } from '$lib/services/predictions';
   import PredictionCard from '$lib/components/PredictionCard.svelte';
   import type { PageProps } from './$types';
 
   let { data }: PageProps = $props();
   let predictions = data.predictions;
   let packages = data.packages;
-
-  async function deletePrediction(id: string): Promise<void> {
-    if (confirm('Are you sure you want to delete this prediction?')) {
-      await predictionsService.deletePrediction(id);
-      predictions = predictions.filter(p => p.id !== id);
-    }
-  }
 </script>
 
 <div class="space-y-6">
@@ -26,7 +18,6 @@
       <PredictionCard 
         {prediction} 
         {packages}
-        onDelete={deletePrediction}
       />
     {/each}
   </div>
