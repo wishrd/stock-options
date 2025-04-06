@@ -1,4 +1,4 @@
-export type VestingStrategy = 'quarterly' | 'six_months' | 'twelve_months';
+export type VestingStrategy = 'linear' | 'cliff' | 'year';
 
 export interface StockOptionPackage {
   id: string;

@@ -1,10 +1,18 @@
 <script lang="ts">
   import type { StockOptionPackage } from '$lib/types';
   import { calculateVestedAmount } from '$lib/utils';
+  import { stockOptionsService } from '$lib/services/stockOptions';
 
   export let stockPackage: StockOptionPackage;
 
   const vestedAmount = calculateVestedAmount(stockPackage);
+
+  async function deletePackage() {
+    if (confirm('Are you sure you want to delete this package?')) {
+      await stockOptionsService.deletePackage(stockPackage.id);
+      window.location.reload();
+    }
+  }
 </script>
 
 <div class="card bg-base-100 shadow-xl">
@@ -30,6 +38,7 @@
     </div>
     <div class="card-actions justify-end mt-4">
       <a href="/package/{stockPackage.id}" class="btn btn-primary btn-sm">Edit</a>
+      <button class="btn btn-error btn-sm" on:click={deletePackage}>Delete</button>
     </div>
   </div>
 </div> 

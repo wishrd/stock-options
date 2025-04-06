@@ -13,7 +13,7 @@ export function calculateVestedAmount(pkg: StockOptionPackage): number {
 
   let vestedAmount = 0;
   switch (pkg.vestingStrategy) {
-    case 'quarterly':
+    case 'linear':
       if (monthsSinceVesting >= 12) {
         const monthsAfterFirstYear = monthsSinceVesting - 12;
         const monthlyVest = pkg.amount * 0.75 / 48;
@@ -21,11 +21,11 @@ export function calculateVestedAmount(pkg: StockOptionPackage): number {
       }
       break;
     
-    case 'six_months':
+    case 'cliff':
       vestedAmount = monthsSinceVesting >= 6 ? pkg.amount : 0;
       break;
     
-    case 'twelve_months':
+    case 'year':
       vestedAmount = monthsSinceVesting >= 12 ? pkg.amount : 0;
       break;
   }

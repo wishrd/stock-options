@@ -5,9 +5,9 @@
 	import type { PageProps } from './$types';
 
   const vestingStrategies: { value: VestingStrategy; label: string }[] = [
-    { value: 'quarterly', label: '1/4 after 1 year, then 1/48 monthly' },
-    { value: 'six_months', label: '100% after 6 months' },
-    { value: 'twelve_months', label: '100% after 12 months' }
+    { value: 'linear', label: 'Linear (1/4 after 1 year, then 1/48 monthly)' },
+    { value: 'cliff', label: 'Cliff (100% after 6 months)' },
+    { value: 'year', label: 'Year (100% after 12 months)' }
   ];
 
   let { data }: PageProps = $props();
