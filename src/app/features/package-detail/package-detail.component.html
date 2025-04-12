@@ -1,0 +1,96 @@
+
+<div class="flex flex-col h-full">
+  <div class="sticky top-0 z-10 bg-base-200">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Edit Package</h1>
+      <button
+        class="btn btn-ghost btn-circle text-error hover:bg-error hover:text-error-content"
+        aria-label="Delete package"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="flex-1 overflow-y-auto py-6 pb-24">
+    <form id="package-detail-form" class="space-y-6" [formGroup]="packageForm" (ngSubmit)="onSubmit()">
+      <div class="space-y-2">
+        <label for="id" class="block text-sm font-medium">Package ID</label>
+        <input
+          type="text"
+          id="id"
+          class="input input-bordered w-full"
+          formControlName="id"
+          aria-required="true"
+          aria-describedby="id-description"
+        />
+        <p id="id-description" class="text-sm text-gray-500 mt-1">Unique identifier for the package</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="amount" class="block text-sm font-medium">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          class="input input-bordered w-full"
+          min="0"
+          step="1"
+          formControlName="amount"
+          aria-required="true"
+          aria-describedby="amount-description"
+        />
+        <p id="amount-description" class="text-sm text-gray-500 mt-1">Number of stock options</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="price" class="block text-sm font-medium">Price</label>
+        <input
+          type="number"
+          id="price"
+          class="input input-bordered w-full"
+          min="0"
+          step="0.01"
+          formControlName="price"
+          aria-required="true"
+          aria-describedby="price-description"
+        />
+        <p id="price-description" class="text-sm text-gray-500 mt-1">Price per stock option</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="vestingDate" class="block text-sm font-medium">Vesting Date</label>
+        <input
+          type="date"
+          id="vestingDate"
+          class="input input-bordered w-full"
+          formControlName="vestingDate"
+          aria-required="true"
+          aria-describedby="vesting-date-description"
+        />
+        <p id="vesting-date-description" class="text-sm text-gray-500 mt-1">Date when vesting starts</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="vestingStrategy" class="block text-sm font-medium">Vesting Strategy</label>
+        <select
+          id="vestingStrategy"
+          class="select select-bordered w-full"
+          formControlName="vestingStrategy"
+          aria-describedby="vesting-strategy-description"
+        >
+          @for (strategy of vestingStrategies; track strategy.value) {
+            <option [value]="strategy.value">{{ strategy.label }}</option>
+          }
+        </select>
+        <p id="vesting-strategy-description" class="text-sm text-gray-500 mt-1">How the stock options will vest over time</p>
+      </div>
+    </form>
+  </div>
+  <div class="fixed bottom-0 left-0 right-0 bg-base-100 border-t border-base-300 py-4 px-4">
+    <div class="flex justify-end gap-4">
+      <a routerLink="/" class="btn btn-ghost">Cancel</a>
+      <button type="submit" form="package-detail-form" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</div>

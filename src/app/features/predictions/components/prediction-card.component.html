@@ -1,0 +1,52 @@
+<div
+  class="card bg-base-100 shadow-xl cursor-pointer group"
+  role="button"
+  tabindex="0"
+  aria-label="Prediction details for price {formatCurrency(prediction.price)}"
+  [attr.aria-expanded]="isExpanded()"
+  (click)="toggleExpand()"
+>
+  <div class="card-body">
+    <div class="flex justify-between items-center">
+      <h2 class="card-title">{{ detailedPrediction().value.price | currency }}</h2>
+      <a
+        class="btn btn-ghost btn-circle text-primary hover:bg-primary hover:text-primary-content"
+        [routerLink]="'/predictions/' + detailedPrediction().value.id"
+        aria-label="Edit prediction"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+      <div>
+        <p class="text-sm text-gray-500">Total Revenue</p>
+        <p class="font-semibold">{{ detailedPrediction().total | currency }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Vested Revenue</p>
+        <p class="font-semibold">{{ detailedPrediction().vested | currency }}</p>
+      </div>
+    </div>
+
+    @if (isExpanded()) {
+      <div class="divider my-2" role="separator"></div>
+      <div class="space-y-4" role="list">
+        @for (pkg of detailedPrediction().packages; track pkg.value.id) {
+          <div class="grid grid-cols-1 gap-2" role="listitem">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium">{{ pkg.value.id }}</span>
+              <span class="text-sm">{{ pkg.total | currency }}</span>
+            </div>
+            <div class="flex justify-between items-center pl-4">
+              <span class="text-sm text-gray-500">Vested</span>
+              <span class="text-sm">{{ pkg.vested | currency }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

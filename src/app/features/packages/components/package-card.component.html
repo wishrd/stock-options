@@ -1,0 +1,26 @@
+<a
+  class="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow"
+  [routerLink]="'/packages/' + package().id"
+>
+  <div class="card-body">
+    <h2 class="card-title">Package {{ package().id }}</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <p class="text-sm text-gray-500">Amount</p>
+        <p class="font-semibold">{{ package().amount }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Price</p>
+        <p class="font-semibold">{{ package().price | currency }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Vesting Date</p>
+        <p class="font-semibold">{{ package().vestingDate | date }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Vested Amount</p>
+        <p class="font-semibold">{{ package().vestedAmount }}</p>
+      </div>
+    </div>
+  </div>
+</a>

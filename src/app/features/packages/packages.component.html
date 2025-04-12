@@ -1,0 +1,12 @@
+<div class="space-y-4">
+  <div class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Packages</h1>
+    <a routerLink="/packages/new" class="btn btn-primary">New</a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    @for (package of packages(); track package.id) {
+      <app-package-card [package]="package" />
+    }
+  </div>
+</div>
