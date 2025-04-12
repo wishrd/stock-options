@@ -1,12 +1,14 @@
-# Stock Options
+# Stock Options Calculator
+
+![Stock Options Calculator](./README.logo.png)
 
 This is an Progressive Web Application for managing stock options and create predictions based on selling prices.
 
-For building the UI it uses SvelteKit and DaisyUI allowing fast development. It is mobile first but can be used in desktop.
+For building the UI it uses Angular and DaisyUI allowing fast development. It is mobile first but can be used in desktop.
 
 ## Database
 
-For the database, it is using IndexedDB, so all data will be stored locally in the browser.
+For the database, it is using IndexedDB through Dexie, so all data will be stored locally in the browser.
 
 ## Main page
 
