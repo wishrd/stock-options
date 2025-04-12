@@ -38,6 +38,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/stock-options",
               "budgets": [
                 {
                   "type": "initial",
