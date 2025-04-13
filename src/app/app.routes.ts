@@ -31,7 +31,7 @@ export const routes: Routes = [
   {
     path: 'predictions/:id',
     resolve: {
-      package: predictionDetailResolver,
+      prediction: predictionDetailResolver,
     },
     loadComponent: () => import('./features/prediction-detail/prediction-detail.component').then(c => c.PredictionDetailComponent),
   },

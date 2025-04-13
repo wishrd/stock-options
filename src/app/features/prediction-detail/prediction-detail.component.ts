@@ -35,4 +35,14 @@ export class PredictionDetailComponent {
 
     this.router.navigateByUrl('/predictions');
   }
+
+  async onDelete(): Promise<void> {
+    const predictionId = this.prediction()?.id;
+    if (!predictionId) {
+      throw new Error('Prediction not found');
+    }
+
+    await this.predictionDataService.delete(predictionId);
+    this.router.navigateByUrl('/predictions');
+  }
 }

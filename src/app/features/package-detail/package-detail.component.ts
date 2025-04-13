@@ -44,4 +44,14 @@ export class PackageDetailComponent {
 
     this.router.navigateByUrl('/packages');
   }
+
+  async onDelete(): Promise<void> {
+    const packageId = this.package()?.id;
+    if (!packageId) {
+      throw new Error('Package not found');
+    }
+
+    await this.packageDataService.delete(packageId);
+    this.router.navigateByUrl('/packages');
+  }
 }
