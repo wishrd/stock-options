@@ -49,6 +49,6 @@ export class Package {
         break;
     }
 
-    return vestedAmount;
+    return Math.floor(vestedAmount);
   }
 }

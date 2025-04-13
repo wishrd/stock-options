@@ -1,11 +1,11 @@
 
 <div class="flex flex-col h-full">
-  <div class="sticky top-0 z-10 bg-base-200">
+  <div class="p-4">
     <div class="flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Edit Package</h1>
+      <h1 class="text-2xl font-bold">Edit package</h1>
       @if (package()) {
         <button
-          class="btn btn-ghost btn-circle text-error hover:bg-error hover:text-error-content"
+          class="btn btn-sm btn-ghost btn-circle text-error hover:bg-error hover:text-error-content"
           aria-label="Delete package"
           onclick="deleteModal.showModal()"
         >
@@ -28,7 +28,7 @@
       }
     </div>
   </div>
-  <div class="flex-1 overflow-y-auto py-6 pb-24">
+  <div class="flex-1 overflow-y-auto p-4 pb-24">
     <form id="package-detail-form" class="space-y-6" [formGroup]="packageForm" (ngSubmit)="onSubmit()">
       <div class="space-y-2">
         <label for="id" class="block text-sm font-medium">Package ID</label>
